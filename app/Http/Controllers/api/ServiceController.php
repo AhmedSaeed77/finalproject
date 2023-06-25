@@ -73,7 +73,7 @@ class ServiceController extends Controller
     public function filtergovernmentRegion($cat,$govrn_id,$region_id)
     {
         $products = Product::where('govern_id',$govrn_id)->where('region_id',$region_id)->where('category_id',$cat)->get();
-foreach($products  as  $product)
+        foreach($products  as  $product)
         {
             $product->photo = url('images/products/'.$product->photo);
         }
@@ -87,11 +87,12 @@ foreach($products  as  $product)
         $product->photo = url('images/products/'.$product->photo);
 
         $proddetailsimages = ProductDetailsImage::where('product_id',$product->id)->get();
-if($proddetailsimages)
-{
-foreach($proddetailsimages as $proddetailsimage)
+        if($proddetailsimages)
+        {
+        foreach($proddetailsimages as $proddetailsimage)
         {
             $proddetailsimage->image = url('images/products/details/'.$proddetailsimage->image);
+            $proddetails->location = base64_encode($proddetails->location);
         }
 }
         
