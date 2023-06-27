@@ -30,9 +30,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+
     
-    Route::post('logout', [AuthController::class, 'logout']);
+    
     Route::post('contact/create', [ContactUsController::class, 'store']);
     Route::get('show', [HomeController::class, 'index']);
     Route::get('service', [ServiceController::class, 'show']);
@@ -61,12 +61,13 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/prod/{id}',[ServiceController::class, 'getOneProduct'])->name('getOneProduct');
         Route::post('search',[ServiceController::class, 'search'])->name('search');
     });
-
+    Route::middleware('auth:sanctum')->group(function () {
 Route::group(['prefix' => 'reserve', 'as' => 'reserve.'], function () {
         Route::post('/table',[ReversationController::class, 'reversetable'])->name('reversetable');
         Route::post('/room',[ReversationController::class, 'reverseroom'])->name('reverseroom');
         Route::post('/operation',[ReversationController::class, 'reverseoperation'])->name('reverseoperation');
     });
+    Route::post('logout', [AuthController::class, 'logout']);
 });
 
 Route::post('register', [AuthController::class, 'register']);
