@@ -89,24 +89,22 @@ class ServiceController extends Controller
         $proddetailsimages = ProductDetailsImage::where('product_id',$product->id)->get();
         if($proddetailsimages)
         {
-        foreach($proddetailsimages as $proddetailsimage)
-        {
-            $proddetailsimage->image = url('images/products/details/'.$proddetailsimage->image);
-            $proddetails->location = base64_encode($proddetails->location);
+            foreach($proddetailsimages as $proddetailsimage)
+            {
+                $proddetailsimage->image = url('images/products/details/'.$proddetailsimage->image);
+            }
         }
-}
         
         $product->images = $proddetailsimages;
         $proddetails = ProductDetails::where('product_id',$product->id)->first();
-if($proddetails)
-{
-$proddetails->image = url('images/products/details/'.$proddetails->image);
-      
-}
-        
-  $product->details = $proddetails;
-        $prodstaffs = ProductStaff::where('product_id',$product->id)->get();
+        if($proddetails)
+        {
+            $proddetails->image = url('images/products/details/'.$proddetails->image);
+            $proddetails->location = base64_encode($proddetails->location);
+        }
+        $product->details = $proddetails;
 
+        $prodstaffs = ProductStaff::where('product_id',$product->id)->get();
         if(count($prodstaffs) >0)
         {
             foreach($prodstaffs as $prodstaff)
