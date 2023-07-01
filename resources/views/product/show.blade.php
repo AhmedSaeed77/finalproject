@@ -34,7 +34,7 @@
               <td>{{$product->name}}</td>
               <td>{{$product->discription}}</td>
               <td>{{$product->category_id}}</td>
-              <td> <img src="{{$product->getFirstMediaUrl()}}" height="100px" width="100px"></td>
+              <td> <img src="{{asset('/images/products/'.$product->photo)}}" height="100px" width="100px"></td>
               <td> {{$product->created_at }}</td>
 
          </tr>
