@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
         Route::get('/{id}',[ServiceController::class, 'allProductForCat'])->name('allProductForCat');
-Route::get('/prod/{id}',[ServiceController::class, 'getOneProduct'])->name('getOneProduct');
+        Route::get('/prod/{id}',[ServiceController::class, 'getOneProduct'])->name('getOneProduct');
         Route::post('search',[ServiceController::class, 'search'])->name('search');
     });
     Route::middleware('auth:sanctum')->group(function () {
