@@ -353,7 +353,7 @@ class ServiceController extends Controller
     public function data($id)
     {
         $product = Product::find($id);
-        if($product->category_id === 4)
+        if($product->category_id == 4)
         {
             $tableresturant = TableResturant::where('product_id',$id)->get();
             
@@ -367,7 +367,7 @@ class ServiceController extends Controller
                 return view('product.data1',compact('product'));
             }
         }
-        elseif($product->category_id === 5)
+        elseif($product->category_id == 5)
         {
             $tableresturant = TableHotel::where('product_id',$id)->get();
             if($tableresturant)
