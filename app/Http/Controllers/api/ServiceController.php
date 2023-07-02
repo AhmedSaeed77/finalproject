@@ -127,7 +127,7 @@ class ServiceController extends Controller
             foreach($prodtables1 as $pt1)
             {
                 $pt1->reserve = Reservation::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                $pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
+                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
             }
             $prodtables = $prodtables1->count();
             $product->prodtables  = $prodtables;
@@ -140,7 +140,7 @@ class ServiceController extends Controller
             foreach($prodtables1 as $pt1)
             {
                 $pt1->reserve = ReservationHotel::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                $pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
+                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
         
             }
             $prodtables = $prodtables1->count();
@@ -156,13 +156,13 @@ class ServiceController extends Controller
             foreach($prodtablesmedical as $pt1)
             {
                 $pt1->reserve = ReservationHospital::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                $pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
+                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
         
             }
             foreach($prodtablesoperation as $pt1)
             {
                 $pt1->reserve = ReservationHospital::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                $pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
+                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
         
             }
             $product->reservemedical  = $prodtablesmedical;
