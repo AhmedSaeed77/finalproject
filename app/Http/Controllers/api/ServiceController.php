@@ -121,27 +121,23 @@ class ServiceController extends Controller
         $prodservice = ProductService::where('product_id',$product->id)->get();
         $product->prodservice  = $prodservice;
 
-        if($product->category_id == 1)
+        if($product->category_id == 4)
         {
             $prodtables1 = TableResturant::where('product_id',$product->id)->get();
             foreach($prodtables1 as $pt1)
             {
                 $pt1->reserve = Reservation::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
             }
             $prodtables = $prodtables1->count();
             $product->prodtables  = $prodtables;
             $product->reserve  = $prodtables1;
-
         }
-        elseif($product->category_id == 2)
+        elseif($product->category_id == 5)
         {
             $prodtables1 = TableHotel::where('product_id',$product->id)->get();
             foreach($prodtables1 as $pt1)
             {
                 $pt1->reserve = ReservationHotel::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
-        
             }
             $prodtables = $prodtables1->count();
             $product->prodrooms  = $prodtables;
@@ -156,8 +152,6 @@ class ServiceController extends Controller
             foreach($prodtablesmedical as $pt1)
             {
                 $pt1->reserve = ReservationHospital::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
-        
             }
             foreach($prodtablesoperation as $pt1)
             {
