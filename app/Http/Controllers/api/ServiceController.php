@@ -174,6 +174,19 @@ class ServiceController extends Controller
         $product = Product::find($id);
         $product->photo = url('images/products/'.$product->photo);
 
+        if($product->category_id == 4)
+        {
+            $product->type = "hotels";
+        }
+        if($product->category_id  == 5)
+        {
+            $product->type = "Resturant";
+        }
+        else
+        {
+            $product->type = "Hospital";
+        }
+
         $proddetailsimages = ProductDetailsImage::where('product_id',$product->id)->get();
         if($proddetailsimages)
         {
