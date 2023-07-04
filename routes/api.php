@@ -62,15 +62,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::post('search',[ServiceController::class, 'search'])->name('search');
     });
     Route::middleware('auth:sanctum')->group(function () {
-Route::group(['prefix' => 'reserve', 'as' => 'reserve.'], function () {
-        Route::post('/table',[ReversationController::class, 'reversetable'])->name('reversetable');
-        Route::post('/room',[ReversationController::class, 'reverseroom'])->name('reverseroom');
-        Route::post('/operation',[ReversationController::class, 'reverseoperation'])->name('reverseoperation');
-    });
+        Route::group(['prefix' => 'reserve', 'as' => 'reserve.'], function () {
+            Route::post('/table',[ReversationController::class, 'reversetable'])->name('reversetable');
+            Route::post('/room',[ReversationController::class, 'reverseroom'])->name('reverseroom');
+            Route::post('/operation',[ReversationController::class, 'reverseoperation'])->name('reverseoperation');
+        });
     Route::post('logout', [AuthController::class, 'logout']);
 });
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::get('/login2', [AuthController::class, 'login'])->name('login');
+//Route::get('/login2', [AuthController::class, 'login'])->name('login');
 
