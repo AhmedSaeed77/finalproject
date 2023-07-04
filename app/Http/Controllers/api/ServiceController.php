@@ -81,7 +81,95 @@ class ServiceController extends Controller
     }
 
 
- public function getOneProduct($id)
+//  public function getOneProduct($id)
+//     {
+//         $product = Product::find($id);
+//         $product->photo = url('images/products/'.$product->photo);
+
+//         $proddetailsimages = ProductDetailsImage::where('product_id',$product->id)->get();
+//         if($proddetailsimages)
+//         {
+//             foreach($proddetailsimages as $proddetailsimage)
+//             {
+//                 $proddetailsimage->image = url('images/products/details/'.$proddetailsimage->image);
+//             }
+//         }
+        
+//         $product->images = $proddetailsimages;
+//         $proddetails = ProductDetails::where('product_id',$product->id)->first();
+//         if($proddetails)
+//         {
+//             $proddetails->image = url('images/products/details/'.$proddetails->image);
+//             $proddetails->location = base64_encode($proddetails->location);
+//         }
+//         $product->details = $proddetails;
+
+//         $prodstaffs = ProductStaff::where('product_id',$product->id)->get();
+//         if(count($prodstaffs) >0)
+//         {
+//             foreach($prodstaffs as $prodstaff)
+//             {
+//                 $prodstaff->image = url('images/products/staff/'.$prodstaff->image);
+//             }
+//             $product->prodstaffs  = $prodstaffs;
+//         }
+//         else
+//         {
+//             $product->prodstaffs  = $prodstaffs;
+//         }
+        
+//         $prodservice = ProductService::where('product_id',$product->id)->get();
+//         $product->prodservice  = $prodservice;
+
+//         if($product->category_id == 4)
+//         {
+//             $prodtables1 = TableResturant::where('product_id',$product->id)->get();
+//             foreach($prodtables1 as $pt1)
+//             {
+//                 $pt1->reserve = Reservation::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+//             }
+//             $prodtables = $prodtables1->count();
+//             $product->prodtables  = $prodtables;
+//             $product->reserve  = $prodtables1;
+//         }
+//         elseif($product->category_id == 5)
+//         {
+//             $prodtables1 = TableHotel::where('product_id',$product->id)->get();
+//             foreach($prodtables1 as $pt1)
+//             {
+//                 $pt1->reserve = ReservationHotel::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+//             }
+//             $prodtables = $prodtables1->count();
+//             $product->prodrooms  = $prodtables;
+//             $product->reserve  = $prodtables1;
+//         }
+//         else
+//         {
+//             $prodtablesmedical = TableHHospital::where('product_id',$product->id)->where('type','medica')->get();
+//             $prodtables1 = $prodtablesmedical->count();
+//             $prodtablesoperation = TableHHospital::where('product_id',$product->id)->where('type','operation')->get();
+//             $prodtables2 = $prodtablesoperation->count();
+//             foreach($prodtablesmedical as $pt1)
+//             {
+//                 $pt1->reserve = ReservationHospital::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+//             }
+//             foreach($prodtablesoperation as $pt1)
+//             {
+//                 $pt1->reserve = ReservationHospital::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+//                 //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
+        
+//             }
+//             $product->reservemedical  = $prodtablesmedical;
+//             $product->reserveperation  = $prodtablesoperation;
+//             $product->prodmedical  = $prodtables1;
+//             $product->prodoperation  = $prodtables2;
+//         }
+
+//         return response()->json(['success' => true,'data' => $product], 200); 
+//     }
+
+    
+    public function getOneProduct($id)
     {
         $product = Product::find($id);
         $product->photo = url('images/products/'.$product->photo);
@@ -100,11 +188,12 @@ class ServiceController extends Controller
         if($proddetails)
         {
             $proddetails->image = url('images/products/details/'.$proddetails->image);
-            $proddetails->location = base64_encode($proddetails->location);
+            $proddetails->location = base64_encode($proddetails->location); 
         }
+        
         $product->details = $proddetails;
-
         $prodstaffs = ProductStaff::where('product_id',$product->id)->get();
+
         if(count($prodstaffs) >0)
         {
             foreach($prodstaffs as $prodstaff)
@@ -127,6 +216,10 @@ class ServiceController extends Controller
             foreach($prodtables1 as $pt1)
             {
                 $pt1->reserve = Reservation::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+                if( $pt1->reserve !=null )
+                {
+                $pt1->user_info=User::find($pt1->reserve->user_id);
+                }
             }
             $prodtables = $prodtables1->count();
             $product->prodtables  = $prodtables;
@@ -137,7 +230,11 @@ class ServiceController extends Controller
             $prodtables1 = TableHotel::where('product_id',$product->id)->get();
             foreach($prodtables1 as $pt1)
             {
-                $pt1->reserve = ReservationHotel::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+                $pt1->reserve  = ReservationHotel::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+                if( $pt1->reserve !=null )
+                {
+                $pt1->user_info=User::find($pt1->reserve->user_id);
+                } 
             }
             $prodtables = $prodtables1->count();
             $product->prodrooms  = $prodtables;
@@ -152,12 +249,19 @@ class ServiceController extends Controller
             foreach($prodtablesmedical as $pt1)
             {
                 $pt1->reserve = ReservationHospital::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
+                if( $pt1->reserve !=null )
+                {
+                $pt1->user_info=User::find($pt1->reserve->user_id);
+                }
+            
             }
             foreach($prodtablesoperation as $pt1)
             {
                 $pt1->reserve = ReservationHospital::where('product_id',$product->id)->where('item_id',$pt1->id)->first();
-                //$pt1->user = User::select('name')->where('id',Auth::user()->id)->first();
-        
+                if( $pt1->reserve !=null )
+                {
+                $pt1->user_info=User::find($pt1->reserve->user_id);
+                }
             }
             $product->reservemedical  = $prodtablesmedical;
             $product->reserveperation  = $prodtablesoperation;
